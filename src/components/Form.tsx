@@ -1,4 +1,4 @@
-// import { FormEvent, useRef, useState } from "react";
+import { FormEvent, useRef, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -20,22 +20,22 @@ const Form = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
-  //   const nameRef = useRef<HTMLInputElement>(null);
-  //   const ageRef = useRef<HTMLInputElement>(null);
-  //   const person = { name: "", age: 0 };
+  // const nameRef = useRef<HTMLInputElement>(null);
+  // const ageRef = useRef<HTMLInputElement>(null);
+  // const person = { name: "", age: 0 };
 
-  //   const [person, setPerson] = useState({ name: "", age: "" });
+  //  const [person, setPerson] = useState({ name: "", age: "" });
 
-  //   const handleSubmit = (event: FormEvent) => {
-  //     event.preventDefault();
+  // const handleSubmit = (event: FormEvent) => {
+  //   event.preventDefault();
 
-  //     // if (nameRef.current !== null) person.name = nameRef.current.value;
-  //     // if (ageRef.current !== null) person.age = parseInt(ageRef.current.value);
-  //     console.log(person);
-  //   };
+  //   if (nameRef.current !== null) person.name = nameRef.current.value;
+  //   if (ageRef.current !== null) person.age = parseInt(ageRef.current.value);
+  //   console.log(person);
+  // };
 
   const onSubmit = (data: FieldValues) => console.log(data);
 
@@ -46,13 +46,12 @@ const Form = () => {
           Name
         </label>
         <input
-          //   {...register("name", { required: true, minLength: 3 })}
-
+          {...register("name", { required: true, minLength: 3 })}
           {...register("name")}
-          //   onChange={(event) =>
-          //     setPerson({ ...person, name: event.target.value })
-          //   }
-          //   value={person.name}
+          //  onChange={(event) =>
+          //   setPerson({ ...person, name: event.target.value })
+          //  }
+          // value={person.name}
           id="name"
           type="text"
           className="form-control"
@@ -60,31 +59,31 @@ const Form = () => {
       </div>
 
       {errors.name && <p className="text-danger">{errors.name.message}</p>}
-      {/* {errors.name?.type === "required" && (
+      {errors.name?.type === "required" && (
         <p className="text-danger">This field is required</p>
       )}
       {errors.name?.type === "minLength" && (
         <p className="text-danger">
           This field required at least three 3 characters
         </p>
-      )} */}
+      )}
       <div className="mb-3">
         <label htmlFor="age" className="form-label">
           Age
         </label>
         <input
           {...register("age", { valueAsNumber: true })}
-          //   onChange={(event) =>
-          //     setPerson({ ...person, age: parseInt(event.target.value) })
-          //   }
-          //   value={person.age}
+          // // onChange={(event) =>
+          // // //   setPerson({ ...person, age: parseInt(event.target.value) })
+          // // // }
+          // value={person.age}
           id="age"
           type="number"
           className="form-control"
         />
       </div>
       {errors.age && <p className="text-danger">{errors.age.message}</p>}
-      <button className="btn btn-primary" type="submit">
+      <button disabled={!isValid} className="btn btn-primary" type="submit">
         Submit
       </button>
     </form>
